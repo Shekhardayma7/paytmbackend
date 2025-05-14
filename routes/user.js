@@ -4,9 +4,9 @@ const {User} = require("../db");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 ;
-// const {aut,authMiddleware}=require("..,authMiddleware.js")
+// const {au"}=require(".".js")
 const JWT_SECRET = require("../config");
-const { authMiddleware } = require("../middleware");
+// const " } = require("../middleware");
 
 const signupSchema = zod.object({
     username : zod.string(),
@@ -49,7 +49,7 @@ console.log(user)
     })
 })
 
-router.get("/",authMiddleware,async (req,res)=>{
+router.get("/",async (req,res)=>{
     // const userID=req.decoded.userId;
     const user=await User.find()
     // const user=await User.findOne({_id:userID});
@@ -108,7 +108,7 @@ const updateschema = zod.object({
     firstname : zod.string().optional(),
     lastname : zod.string().optional(),
 })
-router.put("/update",authMiddleware, async(req,res)=>{
+router.put("/update", async(req,res)=>{
 const body = req.body
 const {success} = updateschema.safeParse(body);
 if(!success){
@@ -134,7 +134,7 @@ res.json({
 //     }]
 // }
 
-router.get("/bulk",authMiddleware, async (req,res)=>{
+router.get("/bulk", async (req,res)=>{
     const filter = req.query.filter || "";
     const users = await User.find({
         $or: [{

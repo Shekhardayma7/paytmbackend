@@ -4,9 +4,8 @@ const {User} = require("../db");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 ;
-// const {au"}=require(".".js")
-const JWT_SECRET = require("../config");
-// const " } = require("../middleware");
+const middleware=require("../middleware")
+const JWT_SECRET = require("../config")
 
 const signupSchema = zod.object({
     username : zod.string(),
@@ -49,7 +48,7 @@ console.log(user)
     })
 })
 
-router.get("/",async (req,res)=>{
+router.get("/",middleware,async (req,res)=>{
     // const userID=req.decoded.userId;
     const user=await User.find()
     // const user=await User.findOne({_id:userID});
@@ -108,7 +107,7 @@ const updateschema = zod.object({
     firstname : zod.string().optional(),
     lastname : zod.string().optional(),
 })
-router.put("/update", async(req,res)=>{
+router.put("/update",middleware, async(req,res)=>{
 const body = req.body
 const {success} = updateschema.safeParse(body);
 if(!success){
@@ -119,8 +118,8 @@ if(!success){
 console.log(req.body.username, req.body.password)
 
 const user= await User.updateOne({_id:req.decoded.userId},body)
-// const users=await User.findOne({_id:req.decoded.userId})
-// console.log(users)
+const users=await User.findOne({_id:req.decoded.userId})
+console.log(users)
 res.json({
     msg: "user updated successfully "
 })
@@ -134,7 +133,7 @@ res.json({
 //     }]
 // }
 
-router.get("/bulk", async (req,res)=>{
+router.get("/bulk",middleware, async (req,res)=>{
     const filter = req.query.filter || "";
     const users = await User.find({
         $or: [{
@@ -154,7 +153,7 @@ router.get("/bulk", async (req,res)=>{
 
     user=users.map((user)=>{
         
-        Userss.push(user.firstname+" "+user.lastname)
+        Userss.push(user.firstname+"   "+user.lastname)
         // Userss.push(user.lastname)
 
     })
